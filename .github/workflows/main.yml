@@ -2,7 +2,12 @@ name: Whale Signal Bot
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # 한국 시간 18:00 (UTC+9 → UTC 기준 9시)
+    - cron: '0 9 * * *'   # 18:00 KST
+    - cron: '0 10 * * *'  # 19:00
+    - cron: '0 11 * * *'  # 20:00
+    - cron: '0 12 * * *'  # 21:00
+    - cron: '0 13 * * *'  # 22:00
+    - cron: '0 14 * * *'  # 23:00
   workflow_dispatch:
 
 jobs:
