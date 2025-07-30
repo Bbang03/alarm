@@ -1,0 +1,28 @@
+name: Whale Monitor
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 한국시간 18:00 (UTC 기준으로 9시)
+  workflow_dispatch:     # 수동 실행도 가능
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 리포지토리 클론
+        uses: actions/checkout@v3
+
+      - name: Python 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 필요 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: 봇 실행
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          USER_ID: ${{ secrets.USER_ID }}
+        run: python main.py
