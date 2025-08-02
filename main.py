@@ -40,7 +40,12 @@ def on_message(ws, message):
         time_str = datetime.fromtimestamp(data['timestamp'] / 1000).strftime("%Y-%m-%d %H:%M:%S")
         msg = f"🐋 고래 감지!\n[{time_str}]\n종목: {code}\n가격: {price}원\n수량: {volume:.4f}\n금액: {value:,.0f}원\n방향: {'매수' if direction == 'BID' else '매도'}"
         print(msg)
-        asyncio.run(send_discord_alert(msg))
+
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            asyncio.ensure_future(send_discord_alert(msg))
+        else:
+            loop.run_until_complete(send_discord_alert(msg))
 
 def on_error(ws, error):
     print("🚨 오류:", error)
